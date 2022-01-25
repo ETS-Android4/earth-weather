@@ -8,4 +8,12 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="main_color">#25B7D3</color>
+    <color name="biru_utama">#62B8F6</color>
+
+    <color name="satu">#ffd052</color>
+    <color name="dua">#fff561</color>
+    <color name="tigar">#0349f4</color>
+    <color name="empat">#08a9ff</color>
+    <color name="lima">#0efff9</color>
+
 </resources>

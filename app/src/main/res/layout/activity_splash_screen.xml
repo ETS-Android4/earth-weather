@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/main_frame"
     tools:context=".SplashScreen">
 
     <LinearLayout
@@ -24,14 +24,14 @@
             android:layout_height="wrap_content"
             android:text="EarthWeather"
             android:textSize="35sp"
-            android:textColor="@color/main_color"
+            android:textColor="@color/white"
             android:fontFamily="@font/poppins_bold"
             android:layout_gravity="center"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="-5dp"
-            android:textColor="@color/main_color"
+            android:textColor="@color/white"
             android:text="Your weather forecast friend!"
             android:layout_gravity="center"
             android:fontFamily="@font/poppins_regular"/>
