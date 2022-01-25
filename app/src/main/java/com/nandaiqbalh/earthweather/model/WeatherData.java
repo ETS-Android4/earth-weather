@@ -13,6 +13,7 @@ public class WeatherData {
     // TODO: Declare the member variables here
 
     private String tvLocationName;
+    private String tvCountry;
     private String tvTemperature;
     private int mCondition;
     private String mIconName;
@@ -26,6 +27,7 @@ public class WeatherData {
             WeatherData weatherData = new WeatherData();
 
             weatherData.tvLocationName = jsonObject.getString("name");
+            weatherData.tvCountry = jsonObject.getJSONObject("sys").getString("country");
             weatherData.tvWeatherName = jsonObject.getJSONArray("weather").getJSONObject(0).getString("description");
             weatherData.mCondition = jsonObject.getJSONArray("weather").getJSONObject(0).getInt("id");
             weatherData.mIconName = updateWeatherIcon(weatherData.mCondition);
@@ -99,6 +101,10 @@ public class WeatherData {
 
     public int getmCondition() {
         return mCondition;
+    }
+
+    public String getTvCountry() {
+        return tvCountry;
     }
 
     public String getmIconName() {

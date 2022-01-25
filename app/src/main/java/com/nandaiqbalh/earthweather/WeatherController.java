@@ -12,6 +12,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,6 +24,8 @@ import com.loopj.android.http.RequestParams;
 import com.nandaiqbalh.earthweather.model.WeatherData;
 
 import org.json.JSONObject;
+
+import java.util.Date;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -49,6 +52,7 @@ public class WeatherController extends AppCompatActivity {
 
     ImageView ivWeatherIcon;
     TextView tvLocationName;
+    TextView tvCountry;
     TextView tvDate;
     TextView tvTemperature;
     TextView tvWeatherName;
@@ -160,6 +164,8 @@ public class WeatherController extends AppCompatActivity {
                 Log.d(LOGCAT_TAG, "Succes! JSON : " + response.toString());
 
                 WeatherData weatherDataModel = WeatherData.fromJson(response);
+                updateUI(weatherDataModel);
+
 
             }
 
@@ -174,10 +180,48 @@ public class WeatherController extends AppCompatActivity {
         });
     }
 
+    // update UI
+    private void updateUI(WeatherData weatherData){
+
+        // icon
+        int resourceID = getResources().getIdentifier(weatherData.getmIconName(), "drawable", getPackageName());
+        ivWeatherIcon.setImageResource(resourceID);
+
+        // location name
+        tvLocationName.setText(weatherData.getTvLocationName());
+
+        // location name
+        tvCountry.setText(", " + weatherData.getTvCountry());
+        tvCountry.setVisibility(View.VISIBLE);
+
+        // time
+        String currentDateTimeString = java.text.DateFormat.getDateTimeInstance().format(new Date());
+        tvDate.setText(currentDateTimeString);
+
+        // temperature
+        tvTemperature.setText(weatherData.getTvTemperature());
+
+        // weather name
+        tvWeatherName.setText(weatherData.getTvWeatherName());
+
+        // wind
+        tvWind.setText(weatherData.getTvWind() + " km/h");
+
+        // pressure
+        tvPressure.setText(weatherData.getTvPressure() + " mbar");
+
+        // humidity
+        tvHumidity.setText(weatherData.getTvHumidity() + " %");
+
+        // visibility
+        tvVisibility.setText(weatherData.getTvVisibility() + " m");
+    }
+
     private void inisialisasi(){
         ivWeatherIcon = (ImageView) findViewById(R.id.iv_icon_weather);
 
         tvLocationName = (TextView) findViewById(R.id.tv_location);
+        tvCountry = (TextView)findViewById(R.id.tv_country);
         tvDate = (TextView) findViewById(R.id.tv_date);
         tvTemperature = (TextView) findViewById(R.id.tv_temperature);
         tvWeatherName = (TextView) findViewById(R.id.tv_weather_name);
