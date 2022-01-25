@@ -13,7 +13,17 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONObject;
+
+import cz.msebera.android.httpclient.Header;
 
 public class WeatherController extends AppCompatActivity {
 
@@ -36,6 +46,12 @@ public class WeatherController extends AppCompatActivity {
     LocationManager mLocationManager;
     LocationListener mLocationListener;
 
+    ImageView ivWeatherIcon;
+    TextView tvLocationName;
+    TextView tvDate;
+    TextView tvTemperature;
+    TextView tvWind, tvPressure, tvHumidity, tvVisibility;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +60,10 @@ public class WeatherController extends AppCompatActivity {
         // full screen
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        inisialisasi();
+
     }
+
 
     @Override
     protected void onResume() {
@@ -70,6 +89,14 @@ public class WeatherController extends AppCompatActivity {
                 // tampilkan longitude dan latitude ke LogCat
                 Log.d(LOGCAT_TAG, "The longitude is : " + longitude);
                 Log.d(LOGCAT_TAG, "The latitude is : " + latitude);
+
+                // membuat params untuk disuplaikan ke API dan networking
+                RequestParams params = new RequestParams(); // RequestParams ini dari library loopj.async
+                // suplay params dengan params.put
+                params.put("lon", longitude); // dalam kurung (key, value)
+                params.put("lat", latitude);
+                params.put("appid", APP_ID);
+                letsDoSomeNetworking(params);
             }
 
             @Override
@@ -119,5 +146,40 @@ public class WeatherController extends AppCompatActivity {
             Log.d(LOGCAT_TAG, "Permission Denied!");
             Toast.makeText(getApplicationContext(), "Failed! location access denied", Toast.LENGTH_SHORT).show();
         }
+    }
+    private void letsDoSomeNetworking(RequestParams params){
+        AsyncHttpClient client = new AsyncHttpClient(); // dari james library (loopj)
+        client.get(WEATHER_URL, params, new JsonHttpResponseHandler(){ // (URL, Params, Output)
+
+            // buat method apabila request kita sukses
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response){
+
+                Log.d(LOGCAT_TAG, "Succes! JSON : " + response.toString());
+
+            }
+
+            // method jika request kita gagal
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response){
+                Log.e(LOGCAT_TAG, "Error :" + e.toString());
+                Log.d(LOGCAT_TAG, "onFailure: status code" + statusCode);
+                Toast.makeText(WeatherController.this, "Request Failed!", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
+    private void inisialisasi(){
+        ivWeatherIcon = (ImageView) findViewById(R.id.iv_icon_weather);
+
+        tvLocationName = (TextView) findViewById(R.id.tv_location);
+        tvDate = (TextView) findViewById(R.id.tv_date);
+        tvTemperature = (TextView) findViewById(R.id.tv_temperature);
+        tvWind = (TextView) findViewById(R.id.tv_wind);
+        tvPressure = (TextView) findViewById(R.id.tv_pressure);
+        tvHumidity = (TextView) findViewById(R.id.tv_humidity);
+        tvVisibility = (TextView) findViewById(R.id.tv_visibility);
+
     }
 }

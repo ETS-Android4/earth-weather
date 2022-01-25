@@ -93,6 +93,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/tv_weather_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -139,6 +140,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tv_wind"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -183,6 +185,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tv_pressure"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -242,6 +245,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tv_humidity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -286,6 +290,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tv_visibility"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
