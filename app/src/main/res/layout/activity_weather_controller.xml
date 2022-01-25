@@ -81,15 +81,6 @@
             android:text="24"
             android:textColor="@color/white"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:paddingTop="15sp"
-            android:text="O"
-            android:textSize="30sp"
-            android:fontFamily="@font/poppins_bold"
-            android:textColor="@color/white"/>
-
     </LinearLayout>
 
     <TextView

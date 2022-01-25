@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.nandaiqbalh.earthweather.model.WeatherData;
 
 import org.json.JSONObject;
 
@@ -50,6 +51,7 @@ public class WeatherController extends AppCompatActivity {
     TextView tvLocationName;
     TextView tvDate;
     TextView tvTemperature;
+    TextView tvWeatherName;
     TextView tvWind, tvPressure, tvHumidity, tvVisibility;
 
     @Override
@@ -157,6 +159,8 @@ public class WeatherController extends AppCompatActivity {
 
                 Log.d(LOGCAT_TAG, "Succes! JSON : " + response.toString());
 
+                WeatherData weatherDataModel = WeatherData.fromJson(response);
+
             }
 
             // method jika request kita gagal
@@ -176,6 +180,7 @@ public class WeatherController extends AppCompatActivity {
         tvLocationName = (TextView) findViewById(R.id.tv_location);
         tvDate = (TextView) findViewById(R.id.tv_date);
         tvTemperature = (TextView) findViewById(R.id.tv_temperature);
+        tvWeatherName = (TextView) findViewById(R.id.tv_weather_name);
         tvWind = (TextView) findViewById(R.id.tv_wind);
         tvPressure = (TextView) findViewById(R.id.tv_pressure);
         tvHumidity = (TextView) findViewById(R.id.tv_humidity);
