@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -14,6 +15,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,7 +44,7 @@ public class WeatherController extends AppCompatActivity {
     // Distance between location updates (1000m or 1km)
     final float MIN_DISTANCE = 1000;
     // LogCat tag
-    final String LOGCAT_TAG = "EW";
+    final String LOGCAT_TAG = "LogD";
 
     // Set Location Provider
     String LOCATION_PROVIDER = LocationManager.GPS_PROVIDER;
@@ -58,6 +61,8 @@ public class WeatherController extends AppCompatActivity {
     TextView tvWeatherName;
     TextView tvWind, tvPressure, tvHumidity, tvVisibility;
 
+    ImageButton btnChangeCity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +73,8 @@ public class WeatherController extends AppCompatActivity {
 
         inisialisasi();
 
+        mainButton();
+
     }
 
 
@@ -75,7 +82,16 @@ public class WeatherController extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        getWeatherForCurrentLocation();
+        Log.d(LOGCAT_TAG, "onResume() Called");
+
+        Intent myIntent = getIntent();
+        String newCity = myIntent.getStringExtra("newCity");
+
+        if (newCity != null){
+            getWeatherForNewCity(newCity);
+        }else {
+            getWeatherForCurrentLocation();
+        }
 
     }
 
@@ -153,6 +169,7 @@ public class WeatherController extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Failed! location access denied", Toast.LENGTH_SHORT).show();
         }
     }
+
     private void letsDoSomeNetworking(RequestParams params){
         AsyncHttpClient client = new AsyncHttpClient(); // dari james library (loopj)
         client.get(WEATHER_URL, params, new JsonHttpResponseHandler(){ // (URL, Params, Output)
@@ -180,6 +197,16 @@ public class WeatherController extends AppCompatActivity {
         });
     }
 
+    // change city
+    private void getWeatherForNewCity(String newCity){
+
+        // membuat parameter untuk request data dari API
+        RequestParams params = new RequestParams();
+        params.put("q", newCity);
+        params.put("appid", APP_ID);
+
+        letsDoSomeNetworking(params);
+    }
     // update UI
     private void updateUI(WeatherData weatherData){
 
@@ -230,5 +257,23 @@ public class WeatherController extends AppCompatActivity {
         tvHumidity = (TextView) findViewById(R.id.tv_humidity);
         tvVisibility = (TextView) findViewById(R.id.tv_visibility);
 
+        btnChangeCity = (ImageButton) findViewById(R.id.btn_change_city);
+    }
+
+    private void mainButton(){
+        btnChangeCity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(WeatherController.this, ChangeCityController.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if (mLocationManager != null) mLocationManager.removeUpdates(mLocationListener);
     }
 }

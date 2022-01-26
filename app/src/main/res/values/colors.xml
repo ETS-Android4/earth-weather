@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="main_color">#25B7D3</color>
     <color name="biru_utama">#62B8F6</color>
+    <color name="trans">#0000ffff</color>
 
     <color name="satu">#ffd052</color>
     <color name="dua">#fff561</color>
