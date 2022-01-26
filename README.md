@@ -47,6 +47,7 @@
 ## About The Project
 
 See the demo on the link below!
+<br />
 [DEMO](https://github.com/nandaiqbalh/earth-weather/tree/master/APLICATION_DEMO)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
